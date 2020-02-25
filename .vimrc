@@ -1,8 +1,17 @@
 syntax on
 set guifont=Monaco:h13
-set tabstop=4
+"set tabstop=4
 set hlsearch
+set nocompatible
+set nofoldenable
+set history=1000
+set backspace=indent,eol,start
+" prompt when existing from an unsaved file
+set confirm
+set t_Co=256
+set title
 set autoread
+set spell
 set cursorline
 set cursorcolumn
 set fenc=utf-8
@@ -10,7 +19,6 @@ set encoding=utf-8
 set langmenu=zh_CN.UTF-8
 
 " bundle conf
-set nocompatible
 filetype off
 set rtp+=/mnt/d/UbuntuApps/vimbundle/bundle/Vundle.vim
 call vundle#begin("/mnt/d/UbuntuApps/vimbundle/bundle/")
@@ -20,6 +28,7 @@ Plugin 'vim-pandoc/vim-pandoc-syntax'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'iamcco/markdown-preview.vim'
 Plugin 'iamcco/mathjax-support-for-mkdp'
+Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'elzr/vim-json'
 Plugin 'tomasr/molokai'
@@ -29,6 +38,7 @@ Plugin 'jalvesaq/Nvim-R'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'majutsushi/tagbar'
+Plugin 'jalvesaq/vimcmdline'
 call vundle#end()
 filetype plugin indent on
 
@@ -57,11 +67,13 @@ colorscheme wombat
 let g:vim_json_syntax_conceal = 0
 
 " nerdtree conf
-map <F2> :NERDTreeToggle<CR>
-let NERDTreeChDirMode = 1
+nmap <F2> :NERDTreeToggle<CR>
+let NERDChristmasTree=0
+let NERDTreeChDirMode = 2
 let NERDTreeShowBookmarks = 1
 let NERDTreeIgnore = ['\~$', '\.pyc$', '\.swp$']
 let NERDTreeWinSize = 25
+let NERDTreeWinPos = "left"
 
 " vim-airline conf
 let g:airline_powerline_fonts=0
@@ -71,3 +83,34 @@ let g:airline#extensions#tagbar#enabled=0
 
 " tagbar conf
 nmap <F8> :TagbarToggle<CR>
+let g:tagbar_left=0
+let g:tagbar_width=30
+let g:tagbar_autofocus = 1
+let g:tagbar_sort = 0
+let g:tagbar_compact = 1
+" tag for coffee
+if executable("coffeetags")
+    let g:tagbar_type_coffee = {
+          \ 'ctagsbin' : 'coffeetags',
+          \ 'ctagsargs' : '',
+          \ 'kinds' : [
+          \ 'f:function',
+          \ 'o:object',
+          \ ],
+          \ 'sro': ".",
+          \ 'kind2scope' : {
+          \ 'f' : 'object',
+          \ 'o' : 'object',
+          \ }
+          \ }
+    let g:tagbar_type_markdown = {
+          \ 'ctagstype' : 'markdown',
+          \ 'sort' : 0,
+          \ 'kinds': [
+          \ 'h:sections'
+          \ ]
+          \ }
+endif
+
+" markdown-preview
+let g:mkdp_path_to_chrome = "/usr/bin/firefox"
